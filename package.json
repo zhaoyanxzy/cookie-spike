@@ -1,0 +1,19 @@
+{
+  "name": "cookie-testing",
+  "version": "1.0.0",
+  "main": "index.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "start-all": "concurrently \"npm run --prefix ./life.gov.sg dev\" \"npm run --prefix ./mylegacy.life.gov.sg dev\" \"npm run --prefix ./api.life.gov.sg dev\" \"npm run --prefix ./cpf.gov.sg dev\"",
+    "start": "concurrently \"npm run --prefix ./life.gov.sg dev\" \"npm run --prefix ./mylegacy.life.gov.sg dev\" \"npm run --prefix ./cpf.gov.sg dev\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "concurrently": "^9.2.0"
+  }
+}
