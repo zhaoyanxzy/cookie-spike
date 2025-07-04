@@ -36,10 +36,6 @@ export function frontendTemplate(
       fetch(`${apiDomain}/set-http-only-cookie`, {
         credentials: "include",
       }).then((r) => r.json());
-    const clearCookies = () =>
-      fetch(`${apiDomain}/clear-cookies`, { credentials: "include" }).then(
-        (r) => r.json()
-      );
     const readCookieFromApi = () =>
       fetch(`${apiDomain}/read-cookie`, { credentials: "include" }).then((r) =>
         r.json()
@@ -59,8 +55,6 @@ export function frontendTemplate(
     }
 
     (async () => {
-      await clearCookies();
-
       try {
         if (shouldSetCookie) {
           await setCookie();
@@ -68,6 +62,7 @@ export function frontendTemplate(
         }
 
         const { cookie } = await readCookieFromApi();
+        console.log("🚀 >>> ~ cookie:", cookie);
         log("log-api", cookieParser(cookie));
 
         const jsCookie = await readCookieViaJS();
