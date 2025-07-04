@@ -7,7 +7,7 @@
   },
   "scripts": {
     "start-all": "concurrently \"npm run --prefix ./life.gov.sg dev\" \"npm run --prefix ./mylegacy.life.gov.sg dev\" \"npm run --prefix ./api.life.gov.sg dev\" \"npm run --prefix ./cpf.gov.sg dev\"",
-    "start": "concurrently \"npm run --prefix ./life.gov.sg dev\" \"npm run --prefix ./mylegacy.life.gov.sg dev\" \"npm run --prefix ./cpf.gov.sg dev\""
+    "start": "concurrently \"npm run --prefix ./life.gov.sg dev\" \"npm run --prefix ./mylegacy.life.gov.sg dev\" \"npm run --prefix ./cpf.gov.sg-2 dev\""
   },
   "keywords": [],
   "author": "",

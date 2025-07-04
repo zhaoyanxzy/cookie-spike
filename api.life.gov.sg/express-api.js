@@ -21,22 +21,22 @@ const defaultCert = {
   key: fs.readFileSync(CERT_KEY_PATH),
   cert: fs.readFileSync(CERT_PATH),
 };
-const additionalCerts = {
-  "cpf.gov.sg": tls.createSecureContext({
-    key: fs.readFileSync(CPF_CERT_KEY_PATH),
-    cert: fs.readFileSync(CPF_CERT_PATH),
-  }),
-};
+// const additionalCerts = {
+//   "cpf.gov.sg": tls.createSecureContext({
+//     key: fs.readFileSync(CPF_CERT_KEY_PATH),
+//     cert: fs.readFileSync(CPF_CERT_PATH),
+//   }),
+// };
 const options = {
   ...defaultCert,
-  SNICallback: (servername, cb) => {
-    const ctx = additionalCerts[servername];
-    if (ctx) {
-      cb(null, ctx);
-    } else {
-      cb(null, tls.createSecureContext(defaultCert)); // fallback
-    }
-  },
+  // SNICallback: (servername, cb) => {
+  //   const ctx = additionalCerts[servername];
+  //   if (ctx) {
+  //     cb(null, ctx);
+  //   } else {
+  //     cb(null, tls.createSecureContext(defaultCert)); // fallback
+  //   }
+  // },
 };
 
 app.use(
@@ -44,12 +44,13 @@ app.use(
     origin: [
       "https://life.gov.sg:3000",
       "https://mylegacy.life.gov.sg:3001",
-      "https://cpf.gov.sg:3002",
+      // "https://cpf.gov.sg:3002",
     ],
     credentials: true, // required to support `credentials: 'include'`
   })
 );
 app.get("/clear-cookies", (req, res) => {
+  // will cause the cookies to be set without values
   // res.clearCookie("mol", {
   //   domain: ".life.gov.sg",
   //   secure: true,
@@ -64,7 +65,7 @@ app.get("/clear-cookies", (req, res) => {
   //   sameSite: "None",
   //   path: "/",
   // });
-  // res.json({ cleared: true });
+  res.json({ cleared: true });
 });
 
 app.get("/set-cookie", (req, res) => {
@@ -72,7 +73,7 @@ app.get("/set-cookie", (req, res) => {
     domain: COOKIE_DOMAIN,
     secure: true, // required for https
     httpOnly: false,
-    sameSite: "None", // Cookie always sent
+    sameSite: "Strict", // None, Lax, Strict
   });
   res.send({ message: "set-cookie set" });
 });
@@ -82,7 +83,7 @@ app.get("/set-http-only-cookie", (req, res) => {
     domain: COOKIE_DOMAIN,
     secure: true,
     httpOnly: true,
-    sameSite: "None",
+    sameSite: "Strict", // None, Lax, Strict
   });
   res.send({ message: "set-http-only-cookie set" });
 });

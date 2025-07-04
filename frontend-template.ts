@@ -59,16 +59,12 @@ export function frontendTemplate(
     }
 
     (async () => {
+      await clearCookies();
+
       try {
         if (shouldSetCookie) {
-          const s1 = await setCookie();
-          log("log-api", { "set-cookie": s1 });
-
-          const s2 = await setHttpCookie();
-          log("log-js", { "set-http-only": s2 });
-
-          const c = await clearCookies();
-          log("log-api", { cleared: c });
+          await setCookie();
+          await setHttpCookie();
         }
 
         const { cookie } = await readCookieFromApi();
