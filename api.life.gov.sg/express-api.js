@@ -1,6 +1,5 @@
 import express from "express";
 import fs from "fs";
-import tls from "tls";
 import https from "https";
 import cors from "cors";
 import jwt from "jsonwebtoken";
@@ -9,8 +8,6 @@ import {
   PORT,
   CERT_KEY_PATH,
   CERT_PATH,
-  CPF_CERT_KEY_PATH,
-  CPF_CERT_PATH,
   COOKIE_DOMAIN,
   JWT_SECRET,
 } from "./paths.js";
@@ -21,22 +18,9 @@ const defaultCert = {
   key: fs.readFileSync(CERT_KEY_PATH),
   cert: fs.readFileSync(CERT_PATH),
 };
-const additionalCerts = {
-  "cpf.gov.sg": tls.createSecureContext({
-    key: fs.readFileSync(CPF_CERT_KEY_PATH),
-    cert: fs.readFileSync(CPF_CERT_PATH),
-  }),
-};
+
 const options = {
   ...defaultCert,
-  SNICallback: (servername, cb) => {
-    const ctx = additionalCerts[servername];
-    if (ctx) {
-      cb(null, ctx);
-    } else {
-      cb(null, tls.createSecureContext(defaultCert)); // fallback
-    }
-  },
 };
 
 app.use(
